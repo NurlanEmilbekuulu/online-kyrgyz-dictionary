@@ -1,14 +1,14 @@
 from django.db import models
 
 
-class WordEntry(models.Model):
+class Word(models.Model):
     word = models.CharField(max_length=100, null=False)
     created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbose_name = 'Word entry'
-        verbose_name_plural = 'Word entries'
+        verbose_name = 'Word'
+        verbose_name_plural = 'Words'
         ordering = ['word']
 
     def __str__(self):
@@ -16,10 +16,11 @@ class WordEntry(models.Model):
 
 
 class Meaning(models.Model):
-    word_entry = models.ForeignKey(
-        'dictionary.WordEntry',
+    word = models.ForeignKey(
+        'dictionary.Word',
         on_delete=models.PROTECT,
-        related_name='meanings'
+        related_name='meanings',
+        related_query_name='meaning'
     )
     text = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
